@@ -55,6 +55,17 @@ app.post('/car', async (req: Request<{}, {}, Car>, res) => {
   })
 })
 
+app.get('/car/:id', async (req, res) => {
+  connection.query(`SELECT * FROM cars WHERE id = ${req.params.id}`, (error, results) => {
+    if (error) {
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    res.json({ data: results });
+  });
+});
+
 app.delete('/cars/:id', async (req, res) => {
 
   connection.query(`
